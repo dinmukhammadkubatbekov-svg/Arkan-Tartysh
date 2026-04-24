@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>⚔️ Аркан Тартыш v3</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+
+<!-- ГЛАВНОЕ МЕНЮ -->
+<div id="screen-menu" class="screen active">
+  <div class="menu-bg">
+    <div class="stars" id="stars"></div>
+    <div class="rope-deco"></div>
+  </div>
+  <div class="menu-content">
+    <div class="logo-wrap">
+      <div class="logo-icon">⚔️</div>
+      <h1 class="logo-title">АРКАН<br>ТАРТЫШ</h1>
+      <p class="logo-sub">Перетягивание каната · Ритм · Мультиплеер</p>
+    </div>
+    <nav class="main-nav">
+      <button class="btn-main" onclick="showScreen('screen-avatar')">
+        <span class="btn-icon">🎮</span><span class="btn-text">ИГРАТЬ</span><span class="btn-shine"></span>
+      </button>
+      <button class="btn-nav" onclick="showScreen('screen-leaderboard'); loadLeaderboard()">
+        <span class="btn-icon">🏆</span><span>ЛИДЕРБОРД</span>
+      </button>
+      <button class="btn-nav" onclick="showScreen('screen-howto')">
+        <span class="btn-icon">📖</span><span>КАК ИГРАТЬ</span>
+      </button>
+    </nav>
+    <p class="menu-hint">Открой страницу на двух устройствах/вкладках</p>
+  </div>
+</div>
+
+<!-- ВЫБОР АВАТАРКИ -->
+<div id="screen-avatar" class="screen">
+  <div class="menu-bg"><div class="rope-deco"></div></div>
+  <div class="avatar-page">
+    <div class="page-header">
+      <button class="btn-back" onclick="showScreen('screen-menu')">← Назад</button>
+      <h2 class="page-title">Выбери бойца!</h2>
+    </div>
+    <div class="name-input-wrap">
+      <label class="name-label">Твоё имя:</label>
+      <input type="text" id="player-name-input" class="name-input" placeholder="Введи никнейм..." maxlength="12" />
+    </div>
+    <div class="avatar-preview-box">
+      <div class="avatar-preview-emoji" id="avatar-preview">🐻</div>
+      <div class="avatar-preview-info">
+        <div class="avatar-preview-name" id="avatar-preview-name">Медведь</div>
+        <div class="avatar-preview-desc" id="avatar-preview-desc">Силач и упрямец</div>
+      </div>
+    </div>
+    <div class="avatar-cats" id="avatar-cats"></div>
+    <div class="avatar-grid" id="avatar-grid"></div>
+    <button class="btn-main btn-confirm" onclick="confirmAvatar()">
+      <span class="btn-icon" id="confirm-icon">🐻</span>
+      <span class="btn-text">В БОЙ!</span>
+      <span class="btn-shine"></span>
+    </button>
+  </div>
+</div>
+
+<!-- ЛИДЕРБОРД -->
+<div id="screen-leaderboard" class="screen">
+  <div class="menu-bg"><div class="rope-deco"></div></div>
+  <div class="lb-page">
+    <div class="page-header">
+      <button class="btn-back" onclick="showScreen('screen-menu')">← Назад</button>
+      <h2 class="page-title">🏆 Лидерборд</h2>
+    </div>
+    <div class="lb-podium" id="lb-podium"></div>
+    <div class="lb-table-wrap">
+      <table class="lb-table">
+        <thead>
+          <tr><th>#</th><th>Игрок</th><th>ELO</th><th>В/И</th><th>%</th><th>🎯</th></tr>
+        </thead>
+        <tbody id="lb-tbody"></tbody>
+      </table>
+    </div>
+    <div class="lb-empty" id="lb-empty">
+      <div style="font-size:52px">🦗</div>
+      <p>Пока никто не играл.<br>Будь первым!</p>
+    </div>
+    <button class="btn-nav" style="margin-top:16px" onclick="clearLeaderboard()">🗑️ Очистить</button>
+  </div>
+</div>
+
+<!-- КАК ИГРАТЬ -->
+<div id="screen-howto" class="screen">
+  <div class="menu-bg"><div class="rope-deco"></div></div>
+  <div class="howto-page">
+    <div class="page-header">
+      <button class="btn-back" onclick="showScreen('screen-menu')">← Назад</button>
+      <h2 class="page-title">📖 Как играть</h2>
+    </div>
+    <div class="howto-cards">
+      <div class="howto-card"><div class="howto-icon">🎵</div><h3>Ритм силы</h3><p>Маркеры летят к зоне нажатия. Жми точно в момент попадания!</p></div>
+      <div class="howto-card"><div class="howto-icon">⚡</div><h3>Точность</h3><p><b class="c-perfect">Perfect</b> = сильный рывок. <b class="c-good">Good</b> = обычный. <b class="c-miss">Miss</b> = штраф!</p></div>
+      <div class="howto-card"><div class="howto-icon">🔥</div><h3>Серия Perfect</h3><p>5+ Perfect подряд — бонус-эффект! Не теряй ритм</p></div>
+      <div class="howto-card"><div class="howto-icon">🏅</div><h3>ELO рейтинг</h3><p>Побеждай → рейтинг растёт. 🥉Bronze→🥈Silver→🥇Gold→👑Legend</p></div>
+      <div class="howto-card"><div class="howto-icon">🏆</div><h3>Победа</h3><p>Перетяни канат до своего края. Точность и ELO записываются!</p></div>
+      <div class="howto-card"><div class="howto-icon">⚡</div><h3>Быстрый реванш</h3><p>После матча жми <b>Реванш</b> — оба согласны = мгновенный бой!</p></div>
+    </div>
+    <button class="btn-main" style="margin-top:8px" onclick="showScreen('screen-avatar')">
+      <span class="btn-icon">🎮</span><span class="btn-text">ИГРАТЬ!</span><span class="btn-shine"></span>
+    </button>
+  </div>
+</div>
+
+<!-- ОЖИДАНИЕ -->
+<div id="screen-waiting" class="screen">
+  <div class="waiting-content">
+    <div class="waiting-avatar" id="waiting-avatar">🐻</div>
+    <div class="spinner"></div>
+    <h2>Ищем соперника...</h2>
+    <p id="waiting-name-label">Игрок готов к бою!</p>
+    <button class="btn-secondary" onclick="location.reload()">Отмена</button>
+  </div>
+</div>
+
+<!-- ОБРАТНЫЙ ОТСЧЁТ -->
+<div id="screen-countdown" class="screen">
+  <div class="countdown-content">
+    <div class="countdown-players">
+      <div class="cd-player">
+        <div class="cd-avatar p1-bg" id="cd-av-p1">🐻</div>
+        <div class="cd-name" id="cd-name-p1">Игрок 1</div>
+      </div>
+      <div class="cd-vs">VS</div>
+      <div class="cd-player">
+        <div class="cd-avatar p2-bg" id="cd-av-p2">🐯</div>
+        <div class="cd-name" id="cd-name-p2">Игрок 2</div>
+      </div>
+    </div>
+    <p class="countdown-label">Начало через</p>
+    <div id="countdown-num" class="countdown-num">3</div>
+    <p class="countdown-hint">Нажимай маркеры точно в зону!</p>
+  </div>
+</div>
+
+<!-- ИГРА -->
+<div id="screen-game" class="screen">
+
+  <div class="game-header">
+    <div class="player-label left">
+      <div class="player-avatar-badge p1-bg"><span id="av-game-p1">🐻</span></div>
+      <div class="player-label-info">
+        <span class="player-name" id="gname-p1">Игрок 1</span>
+        <span class="player-you" id="you-p1"></span>
+        <span class="player-elo" id="elo-p1"></span>
+      </div>
+    </div>
+    <div class="vs-badge">VS</div>
+    <div class="player-label right">
+      <div class="player-label-info right">
+        <span class="player-name" id="gname-p2">Игрок 2</span>
+        <span class="player-you" id="you-p2"></span>
+        <span class="player-elo" id="elo-p2"></span>
+      </div>
+      <div class="player-avatar-badge p2-bg"><span id="av-game-p2">🐯</span></div>
+    </div>
+  </div>
+
+  <!-- Канат -->
+  <div class="rope-arena">
+    <div class="win-zone left" id="wz-left">🏆</div>
+    <div class="rope-track">
+      <div class="rope-visual"></div>
+      <div class="rope-marker" id="rope-marker">
+        <div class="marker-inner" id="marker-inner">⚡</div>
+      </div>
+      <div class="rope-center-mark"></div>
+    </div>
+    <div class="win-zone right" id="wz-right">🏆</div>
+  </div>
+
+  <div id="status-text" class="status-text">Тяни!</div>
+
+  <!-- РИТМ-ДОРОЖКА -->
+  <div class="rhythm-section">
+    <div class="accuracy-row">
+      <div class="accuracy-cell left">
+        <span class="acc-label">Точность</span>
+        <span class="acc-value" id="my-accuracy">—</span>
+        <span class="streak-badge" id="my-perfect-streak"></span>
+      </div>
+      <div class="beat-pulse-wrap">
+        <div id="beat-pulse" class="beat-pulse">♩</div>
+      </div>
+      <div class="accuracy-cell right">
+        <span class="acc-label">Сопер.</span>
+        <span class="acc-value" id="opp-accuracy">—</span>
+      </div>
+    </div>
+
+    <div class="rhythm-track-wrap">
+      <div class="hit-zone" id="hit-zone"></div>
+      <div class="rhythm-track" id="rhythm-track"></div>
+    </div>
+
+    <div class="hit-feedback-wrap">
+      <div id="hit-feedback" class="hit-feedback"></div>
+      <div id="streak-effect" class="streak-effect"></div>
+    </div>
+  </div>
+
+  <!-- Кнопка тянуть -->
+  <div class="controls">
+    <button id="btn-pull" class="btn-pull" ontouchstart="event.preventDefault();doPull()" onclick="doPull()">
+      <span>ТЯНУТЬ!</span><small>[ПРОБЕЛ]</small>
+    </button>
+  </div>
+</div>
+
+<!-- КОНЕЦ ИГРЫ -->
+<div id="screen-gameover" class="screen">
+  <div class="gameover-content">
+    <div class="go-avatar" id="go-avatar">🏆</div>
+    <div class="go-badge" id="go-badge">ПОБЕДА!</div>
+    <h2 id="winner-text">Ты победил!</h2>
+
+    <div class="go-meta-row">
+      <span id="go-accuracy" class="go-accuracy">Точность: —</span>
+      <span id="go-elo" class="go-elo positive">ELO: —</span>
+      <span id="go-rank" class="go-rank"></span>
+    </div>
+
+    <div id="go-score" class="go-score"></div>
+    <div id="go-win-stats" class="go-win-stats"></div>
+
+    <div class="rematch-wrap">
+      <button id="btn-rematch" class="btn-main btn-rematch" onclick="requestRematch()">
+        <span class="btn-icon">⚡</span>
+        <span class="btn-text">Реванш!</span>
+        <span class="btn-shine"></span>
+      </button>
+      <div id="rematch-status" class="rematch-status"></div>
+    </div>
+
+    <div class="go-buttons">
+      <button class="btn-nav" onclick="showScreen('screen-leaderboard'); loadLeaderboard()">
+        <span class="btn-icon">🏆</span><span>Лидерборд</span>
+      </button>
+      <button class="btn-nav" onclick="location.reload()">
+        <span class="btn-icon">🏠</span><span>Меню</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ФИНИШ ОВЕРЛЕЙ (поверх игры) -->
+<div id="finish-overlay" class="finish-overlay hidden">
+  <canvas id="confetti-canvas"></canvas>
+  <div class="finish-inner">
+    <div class="finish-avatars">
+      <div class="finish-av winner-av" id="fin-winner-av">🏆</div>
+      <div class="finish-av loser-av" id="fin-loser-av">😔</div>
+    </div>
+    <div class="finish-title" id="fin-title">ПОБЕДА!</div>
+    <div class="finish-name" id="fin-name"></div>
+    <div class="finish-elo" id="fin-elo"></div>
+    <div class="finish-btns">
+      <button class="btn-main" id="fin-btn-rematch" onclick="requestRematch()">
+        <span class="btn-icon">⚡</span><span class="btn-text">Реванш!</span><span class="btn-shine"></span>
+      </button>
+      <button class="btn-nav" onclick="location.reload()">
+        <span class="btn-icon">🏠</span><span>Меню</span>
+      </button>
+    </div>
+    <div class="finish-rematch-status" id="fin-rematch-status"></div>
+  </div>
+</div>
+
+<!-- ДИСКОННЕКТ -->
+<div id="screen-disconnect" class="screen">
+  <div class="waiting-content">
+    <div style="font-size:64px;margin-bottom:8px">😔</div>
+    <h2>Соперник ушёл</h2>
+    <p>Соединение потеряно</p>
+    <button class="btn-main" onclick="location.reload()">
+      <span class="btn-text">В МЕНЮ</span><span class="btn-shine"></span>
+    </button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

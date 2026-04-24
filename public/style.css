@@ -1,0 +1,1031 @@
+/* =============================================
+   АРКАН ТАРТЫШ — Стили v2
+   ============================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nunito:wght@400;700;900&display=swap');
+
+:root {
+  --red:       #e63946;
+  --red-dark:  #9d0208;
+  --blue:      #1d6fa4;
+  --blue-dark: #023e8a;
+  --gold:      #f4a261;
+  --gold-dark: #e76f51;
+  --bg:        #0d0d16;
+  --bg2:       #13131f;
+  --bg3:       #1e1e2e;
+  --bg4:       #26263a;
+  --text:      #f0ead6;
+  --text-dim:  #7a7068;
+  --rope-col:  #c9a84c;
+  --rope-dark: #7a5c1e;
+  --green:     #2d9948;
+  --radius:    14px;
+  --radius-sm: 8px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 100%; height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Nunito', sans-serif;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* ===== ЭКРАНЫ ===== */
+.screen {
+  position: fixed; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.35s ease;
+  z-index: 1; overflow-y: auto;
+}
+.screen.active { opacity: 1; pointer-events: all; }
+
+/* ===== ФОНОВОЕ УКРАШЕНИЕ ===== */
+.menu-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 15% 50%, rgba(230,57,70,.12) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 50%, rgba(29,111,164,.12) 0%, transparent 55%),
+    linear-gradient(180deg, #0d0d16 0%, #13121e 100%);
+  overflow: hidden;
+  pointer-events: none;
+}
+.rope-deco {
+  position: absolute; top: 50%; left: 0; right: 0; height: 5px;
+  background: repeating-linear-gradient(90deg, var(--rope-dark) 0px, var(--rope-col) 10px, var(--rope-dark) 20px);
+  transform: translateY(-50%); opacity: .1;
+}
+
+/* Звёзды */
+.stars { position: absolute; inset: 0; }
+
+/* ===========================
+   ГЛАВНОЕ МЕНЮ
+   =========================== */
+.menu-content {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column; align-items: center;
+  gap: 24px; padding: 40px 20px; width: 100%; max-width: 400px;
+}
+.logo-wrap { text-align: center; }
+.logo-icon {
+  font-size: 60px; display: block; margin-bottom: 10px;
+  animation: float 3s ease-in-out infinite;
+}
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+
+.logo-title {
+  font-family: 'Black Han Sans', sans-serif;
+  font-size: clamp(44px, 11vw, 76px); line-height: 1;
+  background: linear-gradient(135deg, var(--red) 0%, var(--gold) 50%, var(--blue) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text; letter-spacing: 4px;
+  filter: drop-shadow(0 0 28px rgba(244,162,97,.35));
+}
+.logo-sub { font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: var(--text-dim); margin-top: 8px; }
+
+.main-nav { display: flex; flex-direction: column; gap: 12px; width: 100%; }
+
+.menu-hint { font-size: 12px; color: var(--text-dim); text-align: center; line-height: 1.6; }
+
+/* ===== КНОПКИ ===== */
+.btn-main {
+  position: relative; overflow: hidden; cursor: pointer; border: none;
+  padding: 16px 40px; border-radius: var(--radius);
+  background: linear-gradient(135deg, var(--red) 0%, var(--gold-dark) 100%);
+  color: #fff; font-family: 'Black Han Sans', sans-serif;
+  font-size: 20px; letter-spacing: 3px;
+  box-shadow: 0 6px 28px rgba(230,57,70,.4), 0 0 0 2px rgba(244,162,97,.25);
+  transition: transform .1s, box-shadow .1s;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  width: 100%;
+}
+.btn-main:hover { transform: translateY(-2px); box-shadow: 0 10px 36px rgba(230,57,70,.5); }
+.btn-main:active { transform: scale(.96); }
+
+.btn-nav {
+  cursor: pointer; border: 2px solid var(--bg4); background: var(--bg3);
+  color: var(--text); font-family: 'Nunito', sans-serif;
+  font-size: 16px; font-weight: 900; letter-spacing: 2px;
+  padding: 14px 24px; border-radius: var(--radius);
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  width: 100%; transition: background .2s, border-color .2s;
+}
+.btn-nav:hover { background: var(--bg4); border-color: var(--gold-dark); }
+
+.btn-back {
+  cursor: pointer; background: var(--bg3); border: 2px solid var(--bg4);
+  color: var(--text-dim); font-size: 14px; font-weight: 700;
+  padding: 8px 16px; border-radius: var(--radius-sm);
+  transition: color .2s, border-color .2s;
+}
+.btn-back:hover { color: var(--gold); border-color: var(--gold-dark); }
+
+.btn-secondary {
+  cursor: pointer; background: transparent; border: 2px solid var(--bg4);
+  color: var(--text-dim); font-size: 14px; font-weight: 700;
+  padding: 10px 24px; border-radius: var(--radius);
+  transition: border-color .2s, color .2s;
+}
+.btn-secondary:hover { border-color: var(--text-dim); color: var(--text); }
+
+.btn-shine {
+  position: absolute; top: -50%; left: -60%;
+  width: 45%; height: 200%; background: rgba(255,255,255,.15);
+  transform: skewX(-20deg); animation: shine 3s infinite 1s;
+}
+@keyframes shine { 0%{left:-60%} 30%{left:120%} 100%{left:120%} }
+.btn-icon { font-size: 20px; }
+
+/* ===========================
+   СТРАНИЦА: заголовок
+   =========================== */
+.page-header {
+  display: flex; align-items: center; gap: 16px; margin-bottom: 20px;
+  width: 100%;
+}
+.page-title {
+  font-family: 'Black Han Sans', sans-serif;
+  font-size: clamp(22px, 5vw, 32px); letter-spacing: 2px;
+  background: linear-gradient(90deg, var(--gold), var(--red));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ===========================
+   ВЫБОР АВАТАРКИ
+   =========================== */
+.avatar-page {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column; align-items: center;
+  gap: 16px; padding: 24px 16px; width: 100%; max-width: 500px;
+  max-height: 100vh; overflow-y: auto;
+}
+
+/* Ввод имени */
+.name-input-wrap { display: flex; align-items: center; gap: 10px; width: 100%; }
+.name-label { font-size: 14px; color: var(--text-dim); white-space: nowrap; font-weight: 700; }
+.name-input {
+  flex: 1; background: var(--bg3); border: 2px solid var(--bg4);
+  color: var(--text); font-family: 'Nunito', sans-serif;
+  font-size: 16px; font-weight: 700;
+  padding: 10px 14px; border-radius: var(--radius-sm);
+  outline: none; transition: border-color .2s;
+}
+.name-input:focus { border-color: var(--gold-dark); }
+.name-input::placeholder { color: var(--text-dim); font-weight: 400; }
+
+/* Превью аватарки */
+.avatar-preview-box {
+  display: flex; align-items: center; gap: 16px;
+  background: var(--bg3); border: 2px solid var(--bg4);
+  border-radius: var(--radius); padding: 16px 24px; width: 100%;
+}
+.avatar-preview-emoji {
+  font-size: 56px; line-height: 1;
+  animation: float 2.5s ease-in-out infinite;
+  flex-shrink: 0;
+}
+.avatar-preview-info { display: flex; flex-direction: column; gap: 4px; }
+.avatar-preview-name { font-family: 'Black Han Sans', sans-serif; font-size: 22px; color: var(--gold); }
+.avatar-preview-desc { font-size: 13px; color: var(--text-dim); }
+
+/* Категории */
+.avatar-cats {
+  display: flex; gap: 8px; flex-wrap: wrap; width: 100%;
+}
+.avatar-cat-btn {
+  cursor: pointer; background: var(--bg3); border: 2px solid var(--bg4);
+  color: var(--text-dim); font-size: 13px; font-weight: 700;
+  padding: 6px 14px; border-radius: 20px;
+  transition: all .2s;
+}
+.avatar-cat-btn:hover { border-color: var(--gold-dark); color: var(--text); }
+.avatar-cat-btn.active { background: var(--gold-dark); border-color: var(--gold); color: #000; }
+
+/* Сетка аватарок */
+.avatar-grid {
+  display: grid; grid-template-columns: repeat(5, 1fr);
+  gap: 8px; width: 100%;
+}
+.avatar-cell {
+  cursor: pointer; aspect-ratio: 1;
+  background: var(--bg3); border: 2px solid var(--bg4);
+  border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px; transition: all .15s;
+}
+.avatar-cell:hover { background: var(--bg4); transform: scale(1.08); }
+.avatar-cell.selected {
+  border-color: var(--gold); background: rgba(244,162,97,.15);
+  transform: scale(1.1);
+  box-shadow: 0 0 14px rgba(244,162,97,.4);
+}
+
+.btn-confirm { margin-top: 4px; }
+
+/* ===========================
+   ЛИДЕРБОРД
+   =========================== */
+.lb-page {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column; align-items: center;
+  gap: 16px; padding: 24px 16px; width: 100%; max-width: 560px;
+  max-height: 100vh; overflow-y: auto;
+}
+
+/* Пьедестал топ-3 */
+.lb-podium {
+  display: flex; align-items: flex-end; justify-content: center;
+  gap: 8px; width: 100%; min-height: 130px;
+}
+.lb-podium-item {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 6px; flex: 1; max-width: 140px;
+}
+.lb-podium-avatar { font-size: 36px; line-height: 1; }
+.lb-podium-name {
+  font-size: 12px; font-weight: 900; color: var(--text);
+  text-align: center; max-width: 90px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.lb-podium-wins { font-family: 'Black Han Sans', sans-serif; font-size: 16px; }
+.lb-podium-block {
+  width: 100%; border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Black Han Sans', sans-serif; font-size: 22px;
+}
+.lb-podium-item.rank-1 .lb-podium-block { height: 72px; background: linear-gradient(180deg, #ffd700, #b8860b); color: #000; }
+.lb-podium-item.rank-2 .lb-podium-block { height: 54px; background: linear-gradient(180deg, #c0c0c0, #808080); color: #000; }
+.lb-podium-item.rank-3 .lb-podium-block { height: 40px; background: linear-gradient(180deg, #cd7f32, #8b4513); color: #fff; }
+.lb-podium-item.rank-1 .lb-podium-wins { color: #ffd700; }
+.lb-podium-item.rank-2 .lb-podium-wins { color: #c0c0c0; }
+.lb-podium-item.rank-3 .lb-podium-wins { color: #cd7f32; }
+
+/* Таблица */
+.lb-table-wrap {
+  width: 100%; background: var(--bg3);
+  border-radius: var(--radius); overflow: hidden;
+  border: 1px solid var(--bg4);
+}
+.lb-table { width: 100%; border-collapse: collapse; }
+.lb-table thead tr { background: var(--bg4); }
+.lb-table th {
+  padding: 10px 12px; font-size: 12px;
+  text-transform: uppercase; letter-spacing: 1px;
+  color: var(--text-dim); font-weight: 900; text-align: center;
+}
+.lb-table th:nth-child(2) { text-align: left; }
+.lb-table td {
+  padding: 10px 12px; font-size: 14px; text-align: center;
+  border-top: 1px solid var(--bg4);
+}
+.lb-table td:nth-child(2) { text-align: left; font-weight: 700; }
+.lb-table tr:hover td { background: rgba(255,255,255,.03); }
+.lb-table tr.me td { color: var(--gold); }
+
+.lb-rank-badge {
+  display: inline-block; width: 26px; height: 26px;
+  border-radius: 50%; background: var(--bg4);
+  font-size: 12px; font-weight: 900; line-height: 26px;
+  text-align: center; color: var(--text-dim);
+}
+.lb-rank-badge.r1 { background: #ffd700; color: #000; }
+.lb-rank-badge.r2 { background: #c0c0c0; color: #000; }
+.lb-rank-badge.r3 { background: #cd7f32; color: #fff; }
+
+.lb-player-cell { display: flex; align-items: center; gap: 8px; }
+.lb-av { font-size: 20px; line-height: 1; }
+.lb-pname { font-weight: 800; }
+
+.lb-winrate { font-size: 13px; font-weight: 700; color: var(--green); }
+
+.lb-empty {
+  text-align: center; padding: 32px 16px;
+  color: var(--text-dim); line-height: 1.8;
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+}
+
+/* ===========================
+   КАК ИГРАТЬ
+   =========================== */
+.howto-page {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column; align-items: center;
+  gap: 16px; padding: 24px 16px; width: 100%; max-width: 540px;
+  max-height: 100vh; overflow-y: auto;
+}
+.howto-cards {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 10px; width: 100%;
+}
+.howto-card {
+  background: var(--bg3); border: 1px solid var(--bg4);
+  border-radius: var(--radius); padding: 16px;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.howto-icon { font-size: 28px; }
+.howto-card h3 { font-size: 15px; font-weight: 900; color: var(--gold); }
+.howto-card p  { font-size: 13px; color: var(--text-dim); line-height: 1.5; }
+
+/* ===========================
+   ОЖИДАНИЕ
+   =========================== */
+.waiting-content {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 16px; text-align: center; padding: 32px 20px;
+}
+.waiting-content h2 { font-size: 26px; color: var(--gold); }
+.waiting-content p  { color: var(--text-dim); }
+.waiting-avatar { font-size: 72px; animation: float 2s ease-in-out infinite; }
+
+.spinner {
+  width: 52px; height: 52px;
+  border: 4px solid var(--bg3); border-top-color: var(--gold);
+  border-radius: 50%; animation: spin 1s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ===========================
+   ОТСЧЁТ
+   =========================== */
+.countdown-content {
+  display: flex; flex-direction: column; align-items: center; gap: 16px;
+}
+.countdown-players {
+  display: flex; align-items: center; gap: 24px; margin-bottom: 8px;
+}
+.cd-player { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.cd-avatar {
+  width: 64px; height: 64px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 34px; border: 3px solid rgba(255,255,255,.15);
+}
+.cd-name { font-size: 13px; font-weight: 900; color: var(--text-dim); max-width: 80px; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cd-vs {
+  font-family: 'Black Han Sans', sans-serif; font-size: 24px;
+  color: var(--text-dim); letter-spacing: 3px;
+}
+.countdown-label { font-size: 14px; color: var(--text-dim); letter-spacing: 2px; }
+.countdown-num {
+  font-family: 'Black Han Sans', sans-serif; font-size: 110px; line-height: 1;
+  background: linear-gradient(135deg, var(--gold), var(--red));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text; animation: pop .4s ease;
+}
+@keyframes pop { 0%{transform:scale(.5);opacity:0} 70%{transform:scale(1.1)} 100%{transform:scale(1);opacity:1} }
+
+/* ===========================
+   ИГРА
+   =========================== */
+#screen-game {
+  flex-direction: column; padding: 16px;
+  gap: 12px;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(230,57,70,.07) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 50%, rgba(29,111,164,.07) 0%, transparent 50%),
+    var(--bg);
+}
+
+.game-header {
+  display: flex; align-items: center; justify-content: space-between;
+  width: 100%; max-width: 700px;
+}
+.player-label { display: flex; align-items: center; gap: 10px; }
+.player-label.right { flex-direction: row-reverse; }
+.player-label-info { display: flex; flex-direction: column; gap: 3px; }
+.player-label-info.right { align-items: flex-end; }
+.player-avatar-badge {
+  width: 48px; height: 48px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px; border: 3px solid rgba(255,255,255,.1);
+  flex-shrink: 0;
+}
+.player-name { font-size: 14px; font-weight: 900; color: var(--text); max-width: 90px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.player-you {
+  font-size: 10px; background: var(--gold); color: #000;
+  padding: 1px 7px; border-radius: 20px; font-weight: 900;
+  letter-spacing: 1px; text-transform: uppercase; width: fit-content;
+}
+.player-you:empty { display: none; }
+.vs-badge { font-family: 'Black Han Sans', sans-serif; font-size: 20px; color: var(--text-dim); letter-spacing: 3px; }
+
+/* Событие */
+.event-banner {
+  background: linear-gradient(90deg, var(--gold-dark), var(--gold)); color: #000;
+  font-weight: 900; font-size: 13px; letter-spacing: 2px;
+  padding: 7px 20px; border-radius: 20px; text-align: center; text-transform: uppercase;
+  animation: pulse-banner .5s ease infinite alternate;
+  width: 100%; max-width: 700px;
+}
+.event-banner.hidden { display: none; }
+@keyframes pulse-banner { from{transform:scale(1)} to{transform:scale(1.02);box-shadow:0 0 18px rgba(244,162,97,.5)} }
+
+/* Арена */
+.rope-arena {
+  display: flex; align-items: center;
+  width: 100%; max-width: 700px; gap: 4px;
+}
+.win-zone {
+  font-size: 26px; padding: 6px 10px;
+  background: var(--bg3); border-radius: var(--radius); opacity: .4;
+  transition: opacity .3s, transform .3s; flex-shrink: 0;
+}
+.win-zone.glow { opacity: 1; animation: trophy-glow .5s ease infinite alternate; }
+@keyframes trophy-glow { from{transform:scale(1)} to{transform:scale(1.15);filter:drop-shadow(0 0 10px gold)} }
+
+.rope-track { flex: 1; height: 44px; position: relative; margin: 0 6px; }
+.rope-visual {
+  position: absolute; top: 50%; left: 0; right: 0;
+  height: 10px; transform: translateY(-50%); border-radius: 5px;
+  background: repeating-linear-gradient(90deg, var(--rope-dark) 0px, var(--rope-col) 10px, var(--rope-dark) 20px);
+  background-size: 20px 10px; animation: rope-move .25s linear infinite;
+}
+@keyframes rope-move { from{background-position:0 0} to{background-position:20px 0} }
+.rope-center-mark {
+  position: absolute; top: 50%; left: 50%;
+  width: 3px; height: 26px; background: var(--text-dim);
+  transform: translate(-50%, -50%); border-radius: 2px; opacity: .4;
+}
+.rope-marker {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 44px; height: 44px; transition: left .08s ease-out; z-index: 2;
+}
+.marker-inner {
+  width: 100%; height: 100%; border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, rgba(255,255,255,.3), transparent 60%),
+              linear-gradient(135deg, var(--gold) 0%, var(--rope-dark) 100%);
+  border: 3px solid var(--gold-dark);
+  box-shadow: 0 3px 14px rgba(0,0,0,.5), 0 0 0 3px rgba(244,162,97,.2);
+  display: flex; align-items: center; justify-content: center; font-size: 20px;
+}
+
+.status-text {
+  font-family: 'Black Han Sans', sans-serif; font-size: 16px;
+  letter-spacing: 3px; text-transform: uppercase;
+  color: var(--text-dim); text-align: center; min-height: 24px;
+}
+
+/* Выносливость */
+.stamina-bars { display: flex; gap: 12px; width: 100%; max-width: 700px; }
+.stamina-wrap { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+.stamina-wrap.right { align-items: flex-end; }
+.stamina-wrap label { font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; }
+.stamina-track {
+  width: 100%; height: 10px; background: var(--bg3);
+  border-radius: 5px; overflow: hidden; border: 1px solid rgba(255,255,255,.04);
+}
+.stamina-fill { height: 100%; border-radius: 5px; width: 100%; transition: width .15s ease, background .3s; }
+.stamina-fill.p1 { background: linear-gradient(90deg, var(--red-dark), var(--red)); float: right; }
+.stamina-wrap.left .stamina-track { direction: rtl; }
+.stamina-fill.p2 { background: linear-gradient(90deg, var(--blue-dark), var(--blue)); }
+@keyframes stamina-low { 0%,100%{opacity:1} 50%{opacity:.4} }
+.stamina-fill.low { animation: stamina-low .5s infinite; }
+
+/* Управление */
+.controls { width: 100%; max-width: 700px; }
+.control-group { display: flex; gap: 10px; justify-content: center; }
+.btn-pull {
+  flex: 1; max-width: 240px; padding: 18px 12px; border: none; cursor: pointer;
+  border-radius: var(--radius);
+  background: linear-gradient(135deg, var(--red) 0%, var(--red-dark) 100%);
+  color: #fff; font-family: 'Black Han Sans', sans-serif;
+  font-size: 22px; letter-spacing: 2px;
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  box-shadow: 0 5px 20px rgba(230,57,70,.35);
+  transition: transform .05s, box-shadow .05s;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn-pull small { font-family: 'Nunito', sans-serif; font-size: 10px; opacity: .6; font-weight: 400; }
+.btn-pull:active { transform: scale(.94); box-shadow: 0 2px 8px rgba(230,57,70,.4); }
+.btn-pull.flash { background: linear-gradient(135deg, var(--gold), var(--gold-dark)); }
+.btn-boost {
+  padding: 14px 18px; border: none; cursor: pointer;
+  border-radius: var(--radius);
+  background: linear-gradient(135deg, var(--blue) 0%, var(--blue-dark) 100%);
+  color: #fff; font-family: 'Black Han Sans', sans-serif;
+  font-size: 15px; letter-spacing: 1px;
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  box-shadow: 0 5px 20px rgba(29,111,164,.35);
+  transition: transform .1s, opacity .2s;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn-boost small { font-family: 'Nunito', sans-serif; font-size: 10px; opacity: .6; font-weight: 400; }
+.btn-boost:active { transform: scale(.94); }
+.btn-boost:disabled { opacity: .32; cursor: not-allowed; transform: none; }
+
+/* ===========================
+   КОНЕЦ ИГРЫ
+   =========================== */
+.gameover-content {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 16px; text-align: center; padding: 40px 20px;
+}
+.go-avatar { font-size: 88px; animation: go-bounce .6s ease infinite alternate; }
+@keyframes go-bounce { from{transform:translateY(0) rotate(-5deg)} to{transform:translateY(-14px) rotate(5deg)} }
+.go-badge {
+  font-family: 'Black Han Sans', sans-serif; font-size: 13px; letter-spacing: 4px;
+  padding: 4px 18px; border-radius: 20px; text-transform: uppercase;
+}
+.go-badge.win  { background: linear-gradient(90deg, var(--gold), var(--gold-dark)); color: #000; }
+.go-badge.lose { background: var(--bg3); color: var(--text-dim); }
+#winner-text {
+  font-family: 'Black Han Sans', sans-serif; font-size: 34px;
+  background: linear-gradient(135deg, var(--gold), var(--red));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+#winner-sub { color: var(--text-dim); font-size: 15px; }
+.go-buttons { display: flex; gap: 12px; width: 100%; max-width: 360px; }
+.go-buttons .btn-main, .go-buttons .btn-nav { flex: 1; }
+
+/* ===========================
+   ЦВЕТА КОМАНД
+   =========================== */
+.p1-bg { background: rgba(230,57,70,.25); }
+.p2-bg { background: rgba(29,111,164,.25); }
+
+/* ===========================
+   АДАПТИВ
+   =========================== */
+@media (max-width: 480px) {
+  .logo-title { font-size: 46px; }
+  .avatar-grid { grid-template-columns: repeat(4, 1fr); }
+  .howto-cards { grid-template-columns: 1fr; }
+  .go-buttons { flex-direction: column; }
+  .player-name { max-width: 65px; font-size: 12px; }
+}
+
+/* =============================================
+   АРКАН ТАРТЫШ v3 — Новые стили
+   Ритм, ELO, статистика, реванш
+   ============================================= */
+
+/* ===== ELO и ранг в заголовке ===== */
+.player-elo {
+  font-size: 11px;
+  color: var(--gold);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  display: block;
+  margin-top: 1px;
+}
+
+/* ===== РИТМ-СЕКЦИЯ ===== */
+.rhythm-section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 0 12px;
+  margin-top: 6px;
+}
+
+/* Строка точности */
+.accuracy-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.accuracy-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 64px;
+}
+.accuracy-cell.right { align-items: center; }
+
+.acc-label {
+  font-size: 10px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.acc-value {
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--text);
+  font-family: 'Black Han Sans', sans-serif;
+}
+.streak-badge {
+  font-size: 13px;
+  font-weight: 900;
+  color: var(--gold);
+  min-height: 18px;
+  display: block;
+}
+
+/* Пульс бита */
+.beat-pulse-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+.beat-pulse {
+  font-size: 22px;
+  color: var(--gold);
+  opacity: 0.5;
+  font-family: 'Black Han Sans', sans-serif;
+}
+@keyframes beatPop {
+  0%  { transform: scale(1); opacity: 0.5; }
+  30% { transform: scale(1.6); opacity: 1; }
+  100%{ transform: scale(1); opacity: 0.5; }
+}
+
+/* ===== РИТМ-ДОРОЖКА ===== */
+.rhythm-track-wrap {
+  position: relative;
+  height: 52px;
+  background: linear-gradient(90deg, rgba(244,162,97,0.08) 0%, rgba(30,30,46,0.9) 20%, var(--bg3) 100%);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.07);
+}
+
+/* Hit Zone — полоска слева, куда должен попасть маркер */
+.hit-zone {
+  position: absolute;
+  left: 18%;
+  top: 4px;
+  bottom: 4px;
+  width: 18px;
+  background: rgba(244,162,97,0.18);
+  border-radius: 6px;
+  border: 2px solid rgba(244,162,97,0.7);
+  z-index: 2;
+  transform-origin: center;
+  transition: box-shadow 0.05s, transform 0.05s;
+}
+
+/* Ритм-дорожка (контейнер маркеров) */
+.rhythm-track {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+/* Маркеры ритма */
+.rhythm-marker {
+  position: absolute;
+  top: 50%;
+  width: 24px;
+  height: 24px;
+  margin-top: -12px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  border-radius: 6px;
+  border: 2px solid rgba(255,255,255,0.3);
+  box-shadow: 0 0 8px rgba(244,162,97,0.4);
+  transition: transform 0.06s linear;
+  z-index: 3;
+  will-change: transform;
+}
+
+.rhythm-marker.in-zone-good {
+  background: linear-gradient(135deg, #4cc9f0, #0077b6);
+  box-shadow: 0 0 14px rgba(76,201,240,0.7);
+  transform-origin: center;
+  transform: scaleX(var(--tx,1)) scale(1.1);
+}
+.rhythm-marker.in-zone-perfect {
+  background: linear-gradient(135deg, #f8e16c, #f4a261);
+  box-shadow: 0 0 20px rgba(248,225,108,0.9);
+  transform: scaleX(var(--tx,1)) scale(1.25);
+}
+
+/* ===== ХИТ-ФИДБЭК ===== */
+.hit-feedback-wrap {
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  position: relative;
+}
+
+.hit-feedback {
+  font-size: 20px;
+  font-weight: 900;
+  font-family: 'Black Han Sans', sans-serif;
+  letter-spacing: 2px;
+  opacity: 0;
+}
+@keyframes feedbackPop {
+  0%   { transform: scale(0.6) translateY(8px); opacity: 1; }
+  30%  { transform: scale(1.3) translateY(-4px); opacity: 1; }
+  70%  { transform: scale(1) translateY(0); opacity: 1; }
+  100% { transform: scale(0.9) translateY(-4px); opacity: 0; }
+}
+
+.streak-effect {
+  font-size: 14px;
+  font-weight: 900;
+  color: var(--gold);
+  text-shadow: 0 0 12px rgba(244,162,97,0.8);
+  letter-spacing: 2px;
+  opacity: 0;
+}
+@keyframes streakShow {
+  0%   { transform: scale(0.5); opacity: 0; }
+  20%  { transform: scale(1.2); opacity: 1; }
+  80%  { transform: scale(1); opacity: 1; }
+  100% { transform: scale(1.1); opacity: 0; }
+}
+
+/* ===== АВАТАР АНИМАЦИИ ===== */
+@keyframes avatarPerfect {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(1.5) rotate(10deg); filter: brightness(1.5); }
+  100% { transform: scale(1); filter: brightness(1); }
+}
+@keyframes avatarGood {
+  0%  { transform: scale(1); }
+  30% { transform: scale(1.25); }
+  100%{ transform: scale(1); }
+}
+@keyframes avatarMiss {
+  0%,100% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
+
+/* ===== ТРЯСКА ЭКРАНА ===== */
+@keyframes screenShake {
+  0%,100%{ transform: translateX(0); }
+  20%    { transform: translateX(-8px); }
+  40%    { transform: translateX(8px); }
+  60%    { transform: translateX(-5px); }
+  80%    { transform: translateX(5px); }
+}
+.shake { animation: screenShake 0.4s ease; }
+
+/* ===== КНОПКИ v3 (убрана кнопка boost) ===== */
+.btn-pull {
+  width: 100%;
+  max-width: 420px;
+  padding: 18px 0;
+  font-size: 22px;
+  font-weight: 900;
+  font-family: 'Black Han Sans', sans-serif;
+  letter-spacing: 3px;
+  background: linear-gradient(135deg, var(--red-dark), var(--red));
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(230,57,70,0.5);
+  transition: transform 0.1s, box-shadow 0.1s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  touch-action: manipulation;
+}
+.btn-pull:active,
+.btn-pull.flash {
+  transform: scale(0.96);
+  box-shadow: 0 2px 8px rgba(230,57,70,0.3);
+  filter: brightness(1.2);
+}
+.btn-pull small {
+  font-size: 11px;
+  opacity: 0.6;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 400;
+  letter-spacing: 1px;
+}
+
+/* ===== ЭКРАН КОНЦА ИГРЫ v3 ===== */
+.go-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin: 8px 0 4px;
+}
+.go-accuracy {
+  font-size: 13px;
+  color: var(--text-dim);
+  font-weight: 700;
+}
+.go-elo {
+  font-size: 15px;
+  font-weight: 900;
+  font-family: 'Black Han Sans', sans-serif;
+}
+.go-elo.positive { color: #2dc653; }
+.go-elo.negative { color: var(--red); }
+.go-rank {
+  font-size: 13px;
+  color: var(--gold);
+  font-weight: 700;
+}
+
+/* Детальный счёт Perfect/Good/Miss */
+.go-score {
+  background: rgba(255,255,255,0.04);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  margin: 8px 0;
+  width: 100%;
+  max-width: 380px;
+  font-size: 13px;
+}
+.go-score-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 4px 0;
+}
+.go-score-row.opp { opacity: 0.65; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 8px; margin-top: 4px; }
+.go-perfect { color: var(--gold); font-weight: 900; }
+.go-good    { color: #4cc9f0; font-weight: 700; }
+.go-miss    { color: var(--red); font-weight: 700; }
+
+/* Статистика победителя */
+.go-win-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-bottom: 4px;
+}
+.go-stat b { color: var(--gold); }
+
+/* Реванш */
+.rematch-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin: 10px 0 6px;
+  width: 100%;
+  max-width: 320px;
+}
+.btn-rematch {
+  background: linear-gradient(135deg, #23234a, #3a3a7c) !important;
+  box-shadow: 0 4px 20px rgba(100,80,220,0.4) !important;
+}
+.btn-rematch:hover { filter: brightness(1.15); }
+.rematch-status {
+  font-size: 13px;
+  color: var(--gold);
+  font-weight: 700;
+  min-height: 20px;
+  text-align: center;
+}
+
+/* ===== ЦВЕТА В HOWTO ===== */
+.c-perfect { color: var(--gold); }
+.c-good    { color: #4cc9f0; }
+.c-miss    { color: var(--red); }
+
+/* ===== ПОДСКАЗКА ===== */
+.countdown-hint {
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-top: 8px;
+  letter-spacing: 1px;
+}
+
+/* ===== ЛИДЕРБОРД v3 ===== */
+.lb-table th:nth-child(6),
+.lb-table td:nth-child(6) {
+  color: #4cc9f0;
+  font-size: 12px;
+}
+
+/* ===== ФИНИШ ОВЕРЛЕЙ ===== */
+.finish-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0);
+  transition: background 0.4s ease;
+  pointer-events: none;
+}
+.finish-overlay.visible {
+  background: rgba(0,0,0,0.82);
+  pointer-events: all;
+}
+.finish-overlay.hidden {
+  display: none;
+}
+#confetti-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.finish-inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+  transform: scale(0.6);
+  opacity: 0;
+  transition: transform 0.5s cubic-bezier(0.34,1.56,0.64,1), opacity 0.4s ease;
+}
+.finish-overlay.visible .finish-inner {
+  transform: scale(1);
+  opacity: 1;
+}
+.finish-avatars {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 4px;
+}
+.finish-av {
+  font-size: 72px;
+  line-height: 1;
+  filter: drop-shadow(0 0 20px rgba(255,200,50,0.6));
+}
+.finish-av.winner-av {
+  animation: finWinnerBounce 0.6s 0.3s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+.finish-av.loser-av {
+  font-size: 48px;
+  opacity: 0.6;
+  filter: grayscale(0.5);
+  animation: finLoserDrop 0.5s 0.4s ease both;
+}
+@keyframes finWinnerBounce {
+  0%   { transform: scale(0) rotate(-20deg); opacity: 0; }
+  100% { transform: scale(1) rotate(0deg);   opacity: 1; }
+}
+@keyframes finLoserDrop {
+  0%   { transform: translateY(-30px) rotate(10deg); opacity: 0; }
+  100% { transform: translateY(0) rotate(0deg);      opacity: 0.6; }
+}
+.finish-title {
+  font-size: clamp(48px, 10vw, 80px);
+  font-weight: 900;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #ffd700, #f4a261, #ff6b6b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: finTitlePulse 1.5s ease-in-out infinite alternate;
+}
+.finish-title.lose {
+  background: linear-gradient(135deg, #888, #aaa, #666);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+@keyframes finTitlePulse {
+  from { filter: drop-shadow(0 0 10px rgba(255,215,0,0.4)); }
+  to   { filter: drop-shadow(0 0 28px rgba(255,215,0,0.9)); }
+}
+.finish-name {
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 1px;
+}
+.finish-elo {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--gold);
+  padding: 4px 16px;
+  background: rgba(255,215,0,0.12);
+  border: 1px solid rgba(255,215,0,0.3);
+  border-radius: 20px;
+}
+.finish-elo.negative { color: #e63946; border-color: rgba(230,57,70,0.3); background: rgba(230,57,70,0.1); }
+.finish-btns {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.finish-rematch-status {
+  font-size: 14px;
+  color: var(--gold);
+  font-weight: 700;
+  min-height: 20px;
+}
